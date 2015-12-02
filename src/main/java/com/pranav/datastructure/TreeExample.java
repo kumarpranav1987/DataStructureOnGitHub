@@ -14,8 +14,8 @@ import java.lang.reflect.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
-class N{
-	N(){
+class Node{
+	Node(){
 
 	}
 	public int getData() {
@@ -24,42 +24,42 @@ class N{
 	public void setData(int data) {
 		this.data = data;
 	}
-	public N getLeft() {
+	public Node getLeft() {
 		return left;
 	}
-	public void setLeft(N left) {
+	public void setLeft(Node left) {
 		this.left = left;
 	}
-	public N getRight() {
+	public Node getRight() {
 		return right;
 	}
-	public void setRight(N right) {
+	public void setRight(Node right) {
 		this.right = right;
 	}
 	private int data;
-	private N left;
-	private N right;
+	private Node left;
+	private Node right;
 }
 
-class BT{
-	N root;
-	BT(int data){
-		this.root = new N();
+class BinaryTree{
+	Node root;
+	BinaryTree(int data){
+		this.root = new Node();
 		this.root.setData(data);
 	}
-	void insertLeft(N current,int data){
-		N  temp = new N();
+	void insertLeft(Node current,int data){
+		Node  temp = new Node();
 		temp.setData(data);
 		current.setLeft(temp);
 
 	}
 
-	void insertRight(N current,int data){
-		N temp = new N();
+	void insertRight(Node current,int data){
+		Node temp = new Node();
 		temp.setData(data);;
 		current.setRight(temp);
 	}
-	void inorder(N root){
+	void inorder(Node root){
 		if(root == null)
 			return;
 		inorder(root.getLeft());
@@ -67,7 +67,7 @@ class BT{
 		inorder(root.getRight());
 	}
 
-	void rightView(N root){
+	void rightView(Node root){
 		int level =-1;
 		Queue<QueueNode> q = new LinkedList<>();
 		if (root == null)
@@ -90,16 +90,16 @@ class BT{
 	}
 	private static class QueueNode{
 
-		public QueueNode(N node, int currentLevel) {
+		public QueueNode(Node node, int currentLevel) {
 			super();
 			this.node = node;
 			this.currentLevel = currentLevel;
 		}
-		N node;
-		public N getNode() {
+		Node node;
+		public Node getNode() {
 			return node;
 		}
-		public void setNode(N node) {
+		public void setNode(Node node) {
 			this.node = node;
 		}
 		public int getCurrentLevel() {
@@ -115,7 +115,7 @@ class BT{
 class TreeExample {
 
 	public static void main(String args[]) throws Exception {      
-		BT b = new BT(1);
+		BinaryTree b = new BinaryTree(1);
 		b.insertLeft(b.root, 2);
 		b.insertRight(b.root, 3);
 		b.insertLeft(b.root.getLeft(), 4);
