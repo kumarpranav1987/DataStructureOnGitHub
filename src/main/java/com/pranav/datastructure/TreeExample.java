@@ -77,7 +77,7 @@ class BinaryTree{
 		while (!q.isEmpty()) {
 			QueueNode current = q.poll();
 			if(current.currentLevel > level){
-				System.out.print(current.getNode().getData());
+				System.out.print(" "+current.getNode().getData());
 				level++;
 			}
 			if(current.getNode().getRight() != null)
@@ -122,8 +122,9 @@ class TreeExample {
 		b.insertRight(b.root.getLeft(), 5);
 		b.insertLeft(b.root.getRight(), 6);
 		b.insertRight(b.root.getRight(), 7);
+		System.out.println("*********Inorder Traversal ********");
 		b.inorder(b.root);
-		System.out.println("");
+		System.out.println("\n*********Right View Of Tree*********");
 		b.rightView(b.root);
 
 	}
