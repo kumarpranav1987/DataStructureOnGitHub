@@ -1,5 +1,6 @@
 package com.pranav.datastructure.tree;
 
+import java.awt.image.ConvolveOp;
 import java.io.Externalizable;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -87,6 +88,18 @@ class BinaryTree{
 
 
 		}
+		
+	}
+	int height(Node root){
+		if(root == null)
+		return 0;
+		int l=height(root.getLeft());
+		int r=height(root.getRight());
+		if(l>r)
+			return l+1;
+		else 
+			return r+1;
+		
 	}
 	private static class QueueNode{
 
@@ -110,6 +123,24 @@ class BinaryTree{
 		}
 		int currentLevel;
 	}
+	void deleteTree(Node root){
+		if(root == null)
+			return ;
+		deleteTree(root.getLeft());
+		deleteTree(root.getRight());
+		root=null;	
+	}
+	
+	void convertToMirrorImage(Node root){
+		if(root == null)
+			return ;
+		convertToMirrorImage(root.getLeft());
+		convertToMirrorImage(root.getRight());
+		Node temp = root.getLeft();
+		root.setLeft(root.getRight());
+		root.setRight(temp);
+					
+	}
 
 }
 class TreeExample {
@@ -124,8 +155,16 @@ class TreeExample {
 		b.insertRight(b.root.getRight(), 7);
 		System.out.println("*********Inorder Traversal ********");
 		b.inorder(b.root);
-		System.out.println("\n*********Right View Of Tree*********");
+		System.out.println("\n*********Right View Of Tree*********\n");
 		b.rightView(b.root);
-
+		System.out.println("\n*********Height Of Tree*********");
+		System.out.println(b.height(b.root));
+		/*System.out.println("*********Inorde after Deleting Tree ***************");
+		b.deleteTree(b.root);
+		b.inorder(b.root);*/
+		b.convertToMirrorImage(b.root);
+		System.out.println("*********Inorder Traversal After Convertion to mirror image********");
+		b.inorder(b.root);
+		
 	}
 }
