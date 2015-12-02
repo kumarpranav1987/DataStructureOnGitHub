@@ -1,4 +1,4 @@
-package com.pranav.datastructure;
+package com.pranav.datastructure.tree;
 
 import java.io.Externalizable;
 import java.io.FileInputStream;
