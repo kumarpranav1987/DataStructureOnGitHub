@@ -3,6 +3,7 @@ package com.pranav.hackerrank;
 import java.math.BigInteger;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
@@ -10,7 +11,8 @@ import java.util.Scanner;
 public class Solution1 {
 	static char[] numbers;
 	static int alreadyProcesssedQueryIndex = 0;
-	static int previoussize=0;
+	static BigInteger previoussize=new BigInteger("0");
+	static BigInteger key = new BigInteger("0");
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int numLen = s.nextInt();
@@ -23,18 +25,16 @@ public class Solution1 {
 		}
 		
 		for (int i = 1; i <= numbers.length; i++) {
+			HashMap<BigInteger, BigInteger> map = new HashMap<>();
 			List<BigInteger> big = getSortedNumbersOfParticularSize(i);
-			
-			//System.out.println(big);
-			int currentProcessingIndex = alreadyProcesssedQueryIndex;
-			int temp = 0;
-			while (currentProcessingIndex< queries.length && (queries[currentProcessingIndex].intValue()-(1+previoussize))<big.size()) {
-				//System.out.println("currentProcessingIndex="+currentProcessingIndex);
-				System.out.println((big.get((queries[currentProcessingIndex].intValue()) - (previoussize+1))).mod(new BigInteger("1000000007")));
-				currentProcessingIndex++;
+			for(int k=0;k<big.size();k++){
+				key=key.add(new BigInteger("1"));
+				map.put(key, big.get(k));
 			}
-			alreadyProcesssedQueryIndex = currentProcessingIndex;
-			previoussize += big.size();
+			while (alreadyProcesssedQueryIndex<queries.length && queries[alreadyProcesssedQueryIndex].compareTo(key) <=0) {
+				System.out.println(map.get(queries[alreadyProcesssedQueryIndex]).mod(new BigInteger("1000000007")));
+				alreadyProcesssedQueryIndex++;
+			}
 		}
 
 		/*
