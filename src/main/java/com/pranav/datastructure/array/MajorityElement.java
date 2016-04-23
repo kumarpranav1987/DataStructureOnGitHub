@@ -1,6 +1,5 @@
 package com.pranav.datastructure.array;
 
-import java.util.Arrays;
 
 /**
  * Majority Element: A majority element in an array A[] of size n is an element
