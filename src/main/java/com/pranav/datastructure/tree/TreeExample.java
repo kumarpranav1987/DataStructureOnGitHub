@@ -4,6 +4,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 class Node {
+
+	private int data;
+	private Node left;
+	private Node right;
+
 	Node() {
 
 	}
@@ -31,18 +36,22 @@ class Node {
 	public void setRight(Node right) {
 		this.right = right;
 	}
-
-	private int data;
-	private Node left;
-	private Node right;
 }
 
 class BinaryTree {
-	Node root;
+	private Node root;
 
 	BinaryTree(int data) {
 		this.root = new Node();
 		this.root.setData(data);
+	}
+
+	public Node getRoot() {
+		return root;
+	}
+
+	public void setRoot(Node root) {
+		this.root = root;
 	}
 
 	void insertLeft(Node current, int data) {
@@ -55,8 +64,11 @@ class BinaryTree {
 	void insertRight(Node current, int data) {
 		Node temp = new Node();
 		temp.setData(data);
-		;
 		current.setRight(temp);
+	}
+
+	public void inorder() {
+		inorder(getRoot());
 	}
 
 	void inorder(Node root) {
@@ -67,7 +79,11 @@ class BinaryTree {
 		inorder(root.getRight());
 	}
 
-	void rightView(Node root) {
+	public void rightView() {
+		rightView(this.root);
+	}
+
+	private void rightView(Node root) {
 		int level = -1;
 		Queue<QueueNode> q = new LinkedList<>();
 		if (root == null)
@@ -81,15 +97,21 @@ class BinaryTree {
 				level++;
 			}
 			if (current.getNode().getRight() != null)
-				q.add(new QueueNode(current.getNode().getRight(), current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getRight(),
+						current.currentLevel + 1));
 			if (current.getNode().getLeft() != null)
-				q.add(new QueueNode(current.getNode().getLeft(), current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getLeft(),
+						current.currentLevel + 1));
 
 		}
 
 	}
 
-	int height(Node root) {
+	public int height() {
+		return height(getRoot());
+	}
+
+	private int height(Node root) {
 		if (root == null)
 			return 0;
 		int l = height(root.getLeft());
@@ -130,7 +152,11 @@ class BinaryTree {
 		int currentLevel;
 	}
 
-	void deleteTree(Node root) {
+	public void deleteTree() {
+		deleteTree(getRoot());
+	}
+
+	private void deleteTree(Node root) {
 		if (root == null)
 			return;
 		deleteTree(root.getLeft());
@@ -138,7 +164,11 @@ class BinaryTree {
 		root = null;
 	}
 
-	void convertToMirrorImage(Node root) {
+	public void convertToMirrorImage() {
+		convertToMirrorImage(getRoot());
+	}
+
+	private void convertToMirrorImage(Node root) {
 		if (root == null)
 			return;
 		convertToMirrorImage(root.getLeft());
@@ -155,26 +185,27 @@ class TreeExample {
 
 	public static void main(String args[]) throws Exception {
 		BinaryTree b = new BinaryTree(1);
-		b.insertLeft(b.root, 2);
-		b.insertRight(b.root, 3);
-		b.insertLeft(b.root.getLeft(), 4);
-		b.insertRight(b.root.getLeft(), 5);
-		b.insertLeft(b.root.getRight(), 6);
-		b.insertRight(b.root.getRight(), 7);
+		b.insertLeft(b.getRoot(), 2);
+		b.insertRight(b.getRoot(), 3);
+		b.insertLeft(b.getRoot().getLeft(), 4);
+		b.insertRight(b.getRoot().getLeft(), 5);
+		b.insertLeft(b.getRoot().getRight(), 6);
+		b.insertRight(b.getRoot().getRight(), 7);
 		System.out.println("*********Inorder Traversal ********");
-		b.inorder(b.root);
+		b.inorder();
 		System.out.println("\n*********Right View Of Tree*********\n");
-		b.rightView(b.root);
+		b.rightView();
 		System.out.println("\n*********Height Of Tree*********");
-		System.out.println(b.height(b.root));
+		System.out.println(b.height());
 		/*
 		 * System.out.println(
 		 * "*********Inorde after Deleting Tree ***************");
 		 * b.deleteTree(b.root); b.inorder(b.root);
 		 */
-		b.convertToMirrorImage(b.root);
-		System.out.println("*********Inorder Traversal After Convertion to mirror image********");
-		b.inorder(b.root);
+		b.convertToMirrorImage();
+		System.out
+				.println("*********Inorder Traversal After Convertion to mirror image********");
+		b.inorder();
 
 	}
 }
