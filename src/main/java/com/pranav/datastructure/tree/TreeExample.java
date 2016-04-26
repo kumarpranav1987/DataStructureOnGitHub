@@ -2,6 +2,7 @@ package com.pranav.datastructure.tree;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 class Node {
 
@@ -97,11 +98,9 @@ class BinaryTree {
 				level++;
 			}
 			if (current.getNode().getRight() != null)
-				q.add(new QueueNode(current.getNode().getRight(),
-						current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getRight(), current.currentLevel + 1));
 			if (current.getNode().getLeft() != null)
-				q.add(new QueueNode(current.getNode().getLeft(),
-						current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getLeft(), current.currentLevel + 1));
 
 		}
 
@@ -179,7 +178,70 @@ class BinaryTree {
 
 	}
 
-}
+	public int getMax() {
+		return getMax(getRoot());
+	}
+
+	private int getMax(Node root) {
+		if (null == root)
+			return Integer.MIN_VALUE;
+		int result = root.getData();
+		int lresult = getMax(root.getLeft());
+		int rresult = getMax(root.getRight());
+		if (lresult > result) {
+			result = lresult;
+		}
+		if (rresult > result) {
+			result = rresult;
+		}
+		return result;
+	} 
+	
+	public void levelOrederPerLine(){
+		if(null == root){
+			return;
+		}
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(root);
+		while (!queue.isEmpty()) {
+			System.out.print("\n");
+			int size = queue.size();
+			while (size > 0) {
+				Node current = queue.poll();
+				System.out.print(current.getData()+"  ");
+				if(current.getLeft()!= null){
+					queue.add(current.getLeft());
+				}
+				if(current.getRight()!=null){
+					queue.add(current.getRight());
+				}
+				size--;
+			}
+		}
+	}
+	
+	public void inorderWithoutRecursion(){
+		Node current = root;
+		boolean done = false;
+		Stack<Node> stack = new Stack<>();
+		while(!done){
+			if(current != null){
+				stack.push(current);
+				current=current.getLeft();
+			}else {
+				if(stack.isEmpty()){
+					done = true;
+				}else {
+					Node node = stack.pop();
+					System.out.print(node.getData()+" ");
+					//if(node.getRight()!=null)
+						current = node.getRight();
+				}
+			}
+		}
+		
+	}
+} 
 
 class TreeExample {
 
@@ -193,6 +255,8 @@ class TreeExample {
 		b.insertRight(b.getRoot().getRight(), 7);
 		System.out.println("*********Inorder Traversal ********");
 		b.inorder();
+		System.out.println("\n*********Inorder Without Recursion Traversal ********");
+		b.inorderWithoutRecursion();
 		System.out.println("\n*********Right View Of Tree*********\n");
 		b.rightView();
 		System.out.println("\n*********Height Of Tree*********");
@@ -203,9 +267,10 @@ class TreeExample {
 		 * b.deleteTree(b.root); b.inorder(b.root);
 		 */
 		b.convertToMirrorImage();
-		System.out
-				.println("*********Inorder Traversal After Convertion to mirror image********");
+		System.out.println("*********Inorder Traversal After Convertion to mirror image********");
 		b.inorder();
-
+		System.out.println("\nMax Value in Tree = "+b.getMax());
+		System.out.println("\nlevelOrederPerLine");
+		b.levelOrederPerLine();
 	}
 }
