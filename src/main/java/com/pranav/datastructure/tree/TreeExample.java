@@ -241,6 +241,41 @@ class BinaryTree {
 		}
 		
 	}
+	
+	public void preorderWithoutRecursion(){
+		Stack<Node> stack = new Stack<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			System.out.print(node.getData()+" ");
+			if(node.getRight()!=null){
+				stack.push(node.getRight());
+			}
+			if(node.getLeft()!=null){
+				stack.push(node.getLeft());
+			}
+		}
+	}
+	
+	public void postOrderWithoutRecursionUsingTwoStacks(){
+		Stack<Node> stack = new Stack<>();
+		Stack<Node> finalStack = new Stack<>();
+		stack.push(root);
+		while (!stack.isEmpty()) {
+			Node node = stack.pop();
+			finalStack.push(node);
+			if(node.getLeft()!=null){
+				stack.push(node.getLeft());
+			}
+			if(node.getRight()!=null){
+				stack.push(node.getRight());
+			}
+		}
+		while (!finalStack.isEmpty()) {
+			System.out.print(finalStack.pop().getData()+" ");
+		}
+		
+	}
 } 
 
 class TreeExample {
@@ -257,6 +292,10 @@ class TreeExample {
 		b.inorder();
 		System.out.println("\n*********Inorder Without Recursion Traversal ********");
 		b.inorderWithoutRecursion();
+		System.out.println("\n**********Preorder Without Recursion*********************");
+		b.preorderWithoutRecursion();
+		System.out.println("\n********************Post Order Without Recursion Using Two Stacks");
+		b.postOrderWithoutRecursionUsingTwoStacks();
 		System.out.println("\n*********Right View Of Tree*********\n");
 		b.rightView();
 		System.out.println("\n*********Height Of Tree*********");
