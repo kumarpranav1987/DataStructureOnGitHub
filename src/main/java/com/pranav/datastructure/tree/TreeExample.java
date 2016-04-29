@@ -289,12 +289,13 @@ class BinaryTree {
 				stack.push(root);
 				root = root.getLeft();
 			}
-			Node current = stack.pop();
-			if (!stack.isEmpty() && current.getRight() == stack.peek()) {
+			root = stack.pop();
+			if (!stack.isEmpty() && root.getRight() == stack.peek()) {
 				stack.pop();
-				stack.push(current);
+				stack.push(root);
+				root = root.getRight();
 			} else {
-				System.out.print(current.getData() + " ");
+				System.out.print(root.getData() + " ");
 				root = null;
 			}
 		} while (!stack.isEmpty());
