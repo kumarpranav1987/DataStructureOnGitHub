@@ -98,9 +98,11 @@ class BinaryTree {
 				level++;
 			}
 			if (current.getNode().getRight() != null)
-				q.add(new QueueNode(current.getNode().getRight(), current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getRight(),
+						current.currentLevel + 1));
 			if (current.getNode().getLeft() != null)
-				q.add(new QueueNode(current.getNode().getLeft(), current.currentLevel + 1));
+				q.add(new QueueNode(current.getNode().getLeft(),
+						current.currentLevel + 1));
 
 		}
 
@@ -195,10 +197,10 @@ class BinaryTree {
 			result = rresult;
 		}
 		return result;
-	} 
-	
-	public void levelOrederPerLine(){
-		if(null == root){
+	}
+
+	public void levelOrederPerLine() {
+		if (null == root) {
 			return;
 		}
 		Queue<Node> queue = new LinkedList<>();
@@ -208,75 +210,97 @@ class BinaryTree {
 			int size = queue.size();
 			while (size > 0) {
 				Node current = queue.poll();
-				System.out.print(current.getData()+"  ");
-				if(current.getLeft()!= null){
+				System.out.print(current.getData() + "  ");
+				if (current.getLeft() != null) {
 					queue.add(current.getLeft());
 				}
-				if(current.getRight()!=null){
+				if (current.getRight() != null) {
 					queue.add(current.getRight());
 				}
 				size--;
 			}
 		}
 	}
-	
-	public void inorderWithoutRecursion(){
+
+	public void inorderWithoutRecursion() {
 		Node current = root;
 		boolean done = false;
 		Stack<Node> stack = new Stack<>();
-		while(!done){
-			if(current != null){
+		while (!done) {
+			if (current != null) {
 				stack.push(current);
-				current=current.getLeft();
-			}else {
-				if(stack.isEmpty()){
+				current = current.getLeft();
+			} else {
+				if (stack.isEmpty()) {
 					done = true;
-				}else {
+				} else {
 					Node node = stack.pop();
-					System.out.print(node.getData()+" ");
-					//if(node.getRight()!=null)
-						current = node.getRight();
+					System.out.print(node.getData() + " ");
+					// if(node.getRight()!=null)
+					current = node.getRight();
 				}
 			}
 		}
-		
+
 	}
-	
-	public void preorderWithoutRecursion(){
+
+	public void preorderWithoutRecursion() {
 		Stack<Node> stack = new Stack<>();
 		stack.push(root);
 		while (!stack.isEmpty()) {
 			Node node = stack.pop();
-			System.out.print(node.getData()+" ");
-			if(node.getRight()!=null){
+			System.out.print(node.getData() + " ");
+			if (node.getRight() != null) {
 				stack.push(node.getRight());
 			}
-			if(node.getLeft()!=null){
+			if (node.getLeft() != null) {
 				stack.push(node.getLeft());
 			}
 		}
 	}
-	
-	public void postOrderWithoutRecursionUsingTwoStacks(){
+
+	public void postOrderWithoutRecursionUsingTwoStacks() {
 		Stack<Node> stack = new Stack<>();
 		Stack<Node> finalStack = new Stack<>();
 		stack.push(root);
 		while (!stack.isEmpty()) {
 			Node node = stack.pop();
 			finalStack.push(node);
-			if(node.getLeft()!=null){
+			if (node.getLeft() != null) {
 				stack.push(node.getLeft());
 			}
-			if(node.getRight()!=null){
+			if (node.getRight() != null) {
 				stack.push(node.getRight());
 			}
 		}
 		while (!finalStack.isEmpty()) {
-			System.out.print(finalStack.pop().getData()+" ");
+			System.out.print(finalStack.pop().getData() + " ");
 		}
-		
+
 	}
-} 
+
+	public void postorderTraversalWithoutRecuesionUsingOneStack() {
+		Stack<Node> stack = new Stack<>();
+		Node root = getRoot();
+		do {
+			while (root != null) {
+				if(root.getRight()!=null)
+					stack.push(root.getRight());
+				stack.push(root);
+				root = root.getLeft();
+			}
+			Node current = stack.pop();
+			if (!stack.isEmpty() && current.getRight() == stack.peek()) {
+				stack.pop();
+				stack.push(current);
+			} else {
+				System.out.print(current.getData() + " ");
+				root = null;
+			}
+		} while (!stack.isEmpty());
+
+	}
+}
 
 class TreeExample {
 
@@ -290,12 +314,18 @@ class TreeExample {
 		b.insertRight(b.getRoot().getRight(), 7);
 		System.out.println("*********Inorder Traversal ********");
 		b.inorder();
-		System.out.println("\n*********Inorder Without Recursion Traversal ********");
+		System.out
+				.println("\n*********Inorder Without Recursion Traversal ********");
 		b.inorderWithoutRecursion();
-		System.out.println("\n**********Preorder Without Recursion*********************");
+		System.out
+				.println("\n**********Preorder Without Recursion*********************");
 		b.preorderWithoutRecursion();
-		System.out.println("\n********************Post Order Without Recursion Using Two Stacks");
+		System.out
+				.println("\n********************Post Order Without Recursion Using Two Stacks");
 		b.postOrderWithoutRecursionUsingTwoStacks();
+		System.out
+				.println("\n**********postorderTraversalWithoutRecuesionUsingOneStack**********");
+		b.postorderTraversalWithoutRecuesionUsingOneStack();
 		System.out.println("\n*********Right View Of Tree*********\n");
 		b.rightView();
 		System.out.println("\n*********Height Of Tree*********");
@@ -306,9 +336,10 @@ class TreeExample {
 		 * b.deleteTree(b.root); b.inorder(b.root);
 		 */
 		b.convertToMirrorImage();
-		System.out.println("*********Inorder Traversal After Convertion to mirror image********");
+		System.out
+				.println("*********Inorder Traversal After Convertion to mirror image********");
 		b.inorder();
-		System.out.println("\nMax Value in Tree = "+b.getMax());
+		System.out.println("\nMax Value in Tree = " + b.getMax());
 		System.out.println("\nlevelOrederPerLine");
 		b.levelOrederPerLine();
 	}
