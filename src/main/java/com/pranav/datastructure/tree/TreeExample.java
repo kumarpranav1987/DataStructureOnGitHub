@@ -301,6 +301,20 @@ class BinaryTree {
 		} while (!stack.isEmpty());
 
 	}
+	public int maxRootToLeafPathSum(){
+		return maxRootToLeafPathSum(root);
+	}
+
+	private int maxRootToLeafPathSum(Node root) {
+		if(root == null){
+			return 0;
+		}
+		int lSum = maxRootToLeafPathSum(root.getLeft());
+		int rSum = maxRootToLeafPathSum(root.getRight());
+		return ((lSum + root.getData()) > (rSum + root.getData())) ? (lSum + root.getData()) : (rSum + root.getData());
+	}
+	
+	
 }
 
 class TreeExample {
@@ -343,5 +357,7 @@ class TreeExample {
 		System.out.println("\nMax Value in Tree = " + b.getMax());
 		System.out.println("\nlevelOrederPerLine");
 		b.levelOrederPerLine();
+		
+		System.out.println("\nMax Root To Leaf Path Sum = "+b.maxRootToLeafPathSum());
 	}
 }
