@@ -1,7 +1,5 @@
 package com.pranav.datastructure.tree;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 class BNode {
 	private BNode left;
 	private BNode right;

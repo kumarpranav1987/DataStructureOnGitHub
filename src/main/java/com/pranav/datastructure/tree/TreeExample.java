@@ -1,9 +1,28 @@
 package com.pranav.datastructure.tree;
 
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+class Count{
+	private int i;
+	public Count(int i) {
+		this.i = i;
+	}
+	public int getI() {
+		return i;
+	}
+	public void setI(int i) {
+		this.i = i;
+	}
+	public void incrementI() {
+		i++;
+	}
+}
 class Node {
 
 	private int data;
@@ -314,6 +333,33 @@ class BinaryTree {
 		return ((lSum + root.getData()) > (rSum + root.getData())) ? (lSum + root.getData()) : (rSum + root.getData());
 	}
 	
+	public void convertToBST(){
+		List<Integer> list = new ArrayList<>();
+		populateListWithTreeData(root,list);
+		Collections.sort(list);
+		Count i = new Count(0);
+		replaceWhiletravesringInorder(root,list,i);
+	}
+
+	private void replaceWhiletravesringInorder(Node root, List<Integer> list, Count i) {
+		if (root == null) {
+			return ;
+		}
+		replaceWhiletravesringInorder(root.getLeft(), list, i);
+		root.setData(list.get(i.getI()));
+		i.incrementI();
+		replaceWhiletravesringInorder(root.getRight(), list, i);
+	}
+
+	private void populateListWithTreeData(Node root, List<Integer> list) {
+		if (root == null) {
+			return;
+		}
+		populateListWithTreeData(root.getLeft(), list);
+		list.add(root.getData());
+		populateListWithTreeData(root.getRight(), list);
+	}
+
 	
 }
 
@@ -329,7 +375,7 @@ class TreeExample {
 		b.insertRight(b.getRoot().getRight(), 7);
 		System.out.println("*********Inorder Traversal ********");
 		b.inorder();
-		System.out
+		/*System.out
 				.println("\n*********Inorder Without Recursion Traversal ********");
 		b.inorderWithoutRecursion();
 		System.out
@@ -345,11 +391,11 @@ class TreeExample {
 		b.rightView();
 		System.out.println("\n*********Height Of Tree*********");
 		System.out.println(b.height());
-		/*
+		
 		 * System.out.println(
 		 * "*********Inorde after Deleting Tree ***************");
 		 * b.deleteTree(b.root); b.inorder(b.root);
-		 */
+		 
 		b.convertToMirrorImage();
 		System.out
 				.println("*********Inorder Traversal After Convertion to mirror image********");
@@ -358,6 +404,9 @@ class TreeExample {
 		System.out.println("\nlevelOrederPerLine");
 		b.levelOrederPerLine();
 		
-		System.out.println("\nMax Root To Leaf Path Sum = "+b.maxRootToLeafPathSum());
+		System.out.println("\nMax Root To Leaf Path Sum = "+b.maxRootToLeafPathSum());*/
+		b.convertToBST();
+		System.out.println("\nAfter converting to bst\n");
+		b.inorder();
 	}
 }
