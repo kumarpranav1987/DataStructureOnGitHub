@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
+
 class Count {
 	private int i;
 
@@ -455,6 +456,34 @@ class BinaryTree {
 		}
 	}
 
+	public void printPaths(Node root) {
+		Queue<Node> queue = new LinkedList<>();
+		printPaths(root, queue);
+	}
+
+	private void printPaths(Node root, Queue<Node> queue) {
+		if (root == null) {
+			return;
+		} else if ((root.getLeft() == null) && (root.getRight() == null)) {
+			printQueue(queue);
+			System.out.print(root.getData() + " ");
+			System.out.print("# ");
+		} else {
+			queue.add(root);
+			printPaths(root.getLeft(), queue);
+			printPaths(root.getRight(), queue);
+			queue.remove(root);
+		}
+
+	}
+
+	private void printQueue(Queue<Node> queue) {
+		for(Node node : queue){
+			System.out.print(node.getData()+" ");
+		}
+	}
+
+
 }
 
 
@@ -473,6 +502,8 @@ class TreeExample {
 		b.inorder();
 		System.out.println("\n*********Diameter ********");
 		System.out.println(b.diameter(b.getRoot()));
+		System.out.println("\n*********Roo to leaf Path ********");
+		b.printPaths(b.getRoot());
 		/*
 		 * System.out .println(
 		 * "\n*********Inorder Without Recursion Traversal ********");
