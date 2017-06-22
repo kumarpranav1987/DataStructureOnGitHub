@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
-
 class Count {
 	private int i;
 
@@ -403,8 +402,8 @@ class BinaryTree {
 	public void printBoundary() {
 		Node myRoot = this.root;
 		while (myRoot != null && (myRoot.getLeft() != null && myRoot.getRight() != null)) {
-			System.out.print(myRoot.getData()+" ");
-			myRoot = myRoot.getLeft();		
+			System.out.print(myRoot.getData() + " ");
+			myRoot = myRoot.getLeft();
 		}
 		printLeaf(this.root);
 		printRight(root);
@@ -415,23 +414,22 @@ class BinaryTree {
 			return;
 		}
 		printLeaf(root.getLeft());
-		if (root.getLeft()==null && root.getRight()==null) {
-			System.out.print(root.getData()+" ");
+		if (root.getLeft() == null && root.getRight() == null) {
+			System.out.print(root.getData() + " ");
 		}
 		printLeaf(root.getRight());
-		
+
 	}
 
 	private void printRight(Node root) {
 		if (root == null) {
-			return;	
+			return;
 		}
 		printRight(root.getRight());
-		if (root.getLeft()!=null && root.getRight()!=null) {
-			System.out.print(root.getData()+" ");
+		if (root.getLeft() != null && root.getRight() != null) {
+			System.out.print(root.getData() + " ");
 		}
 	}
-	
 
 	/* Complete the function to get diameter of a binary tree */
 	int diameter(Node node) {
@@ -446,11 +444,11 @@ class BinaryTree {
 			max.setData(0);
 			return 0;
 		} else {
-			int l = diameter(node.getLeft(),max);
-			int r = diameter(node.getRight(),max);
+			int l = diameter(node.getLeft(), max);
+			int r = diameter(node.getRight(), max);
 			int height = Integer.max(l, r) + 1;
 			if ((l + r + 1) > max.getData()) {
-				max.setData(l+r+1);
+				max.setData(l + r + 1);
 			}
 			return height;
 		}
@@ -478,32 +476,56 @@ class BinaryTree {
 	}
 
 	private void printQueue(Queue<Node> queue) {
-		for(Node node : queue){
-			System.out.print(node.getData()+" ");
+		for (Node node : queue) {
+			System.out.print(node.getData() + " ");
 		}
 	}
 
+	boolean hasPathSum(Node node, int sum) {
+		if ((node == null)) {
+			return false;
+		} else if ((node.getLeft() == null) && (node.getRight() == null) && (sum == node.getData())) {
+			return true;
+		} else {
+			return hasPathSum(node.getLeft(), sum - node.getData())
+					|| hasPathSum(node.getRight(), sum - node.getData());
+		}
+	}
 
+	int getSumOfAllLeaves(Node root) {
+		if (root == null) {
+			return 0;
+		} else if ((root.getLeft() == null) && (root.getRight() == null)) {
+			return root.getData();
+		} else {
+			return getSumOfAllLeaves(root.getLeft()) + getSumOfAllLeaves(root.getRight());
+		}
+	}
 }
-
-
 
 class TreeExample {
 
 	public static void main(String args[]) throws Exception {
 		BinaryTree b = new BinaryTree(1);
+		
 		b.insertLeft(b.getRoot(), 2);
 		b.insertRight(b.getRoot(), 3);
+
 		b.insertLeft(b.getRoot().getLeft(), 4);
 		b.insertRight(b.getRoot().getLeft(), 5);
 		b.insertLeft(b.getRoot().getRight(), 6);
 		b.insertRight(b.getRoot().getRight(), 7);
+
 		System.out.println("*********Inorder Traversal ********");
 		b.inorder();
 		System.out.println("\n*********Diameter ********");
 		System.out.println(b.diameter(b.getRoot()));
 		System.out.println("\n*********Roo to leaf Path ********");
 		b.printPaths(b.getRoot());
+		System.out.println("\n*********Hash Path Sum ********");
+		System.out.println(b.hasPathSum(b.getRoot(), 3));
+		System.out.println("\n*********Sum of All Leaves ********");
+		System.out.println(b.getSumOfAllLeaves(b.getRoot()));
 		/*
 		 * System.out .println(
 		 * "\n*********Inorder Without Recursion Traversal ********");
@@ -533,10 +555,11 @@ class TreeExample {
 		 * +b.maxRootToLeafPathSum());
 		 */
 		// b.convertToBST();
-		//System.out.println("\nAfter converting to bst\n");
-		//b.inorder();
-		//System.out.println("\n" + "Max = " + b.maxInSubTreeWithGivenRoot(b.getRoot()));
-		//System.out.println();
-		//b.printBoundary();
+		// System.out.println("\nAfter converting to bst\n");
+		// b.inorder();
+		// System.out.println("\n" + "Max = " +
+		// b.maxInSubTreeWithGivenRoot(b.getRoot()));
+		// System.out.println();
+		// b.printBoundary();
 	}
 }
