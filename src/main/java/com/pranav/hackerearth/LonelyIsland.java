@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
+//https://www.hackerearth.com/practice/algorithms/graphs/topological-sort/practice-problems/algorithm/lonelyisland-49054110/description/
 public class LonelyIsland {
 	private static int MAX = 0;
 	private static Map<Integer, Integer> stuckCount = new HashMap<>();
