@@ -42,7 +42,7 @@ public class LonelyIsland {
 	}
 
 	private static void dfs(int startingIsland, Map<Integer, List<Integer>> adjacencyList) {
-		if (!adjacencyList.containsKey(startingIsland) || adjacencyList.get(startingIsland).size() == 0) {
+		if (!adjacencyList.containsKey(startingIsland)) {
 			int count = 0;
 			if (stuckCount.containsKey(startingIsland)) {
 				count = stuckCount.get(startingIsland);
