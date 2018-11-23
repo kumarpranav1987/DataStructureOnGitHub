@@ -1,65 +1,64 @@
 package com.pranav.hackerearth;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
+
 //https://www.hackerearth.com/practice/algorithms/graphs/topological-sort/practice-problems/algorithm/lonelyisland-49054110/description/
 public class LonelyIsland {
-	private static int MAX = 0;
-	private static Map<Integer, Integer> stuckCount = new HashMap<>();
-
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int numberOfIslands = s.nextInt();
 		int numberOfBridges = s.nextInt();
 		int startingIsland = s.nextInt();
-		Map<Integer, List<Integer>> adjacencyList = new HashMap<>();
+		startingIsland--;
+		int[] indegree = new int[numberOfIslands];
+		int[] outdegree = new int[numberOfIslands];
+		Map<Integer, LinkedList<Integer>> adjList = new HashMap<>();
+		for (int i = 0; i < numberOfIslands; i++) {
+			adjList.put(i, new LinkedList<>());
+		}
+		int start;
+		int end;
 		for (int i = 0; i < numberOfBridges; i++) {
-			int start = s.nextInt();
-			int end = s.nextInt();
-			if (adjacencyList.containsKey(start)) {
-				adjacencyList.get(start).add(end);
-			} else {
-				List<Integer> l = new LinkedList<>();
-				l.add(end);
-				adjacencyList.put(start, l);
+			start = s.nextInt() - 1;
+			end = s.nextInt() - 1;
+			indegree[end]++;
+			outdegree[start]++;
+			adjList.get(start).add(end);
+		}
+		s.close();
+		Queue<Integer> islandWithZeroIndegree = new LinkedList<>();
+		for (int i = 0; i < numberOfIslands; i++) {
+			if (indegree[i] == 0) {
+				islandWithZeroIndegree.add(i);
 			}
 		}
-		dfs(startingIsland, adjacencyList);
-		List<Integer> result = new LinkedList<>();
-		for(Integer key : stuckCount.keySet()) {
-			if(stuckCount.get(key) == MAX) {
-				result.add(key);
+		double[] probabilty = new double[numberOfIslands];
+		probabilty[startingIsland] = 1;
+		while (!islandWithZeroIndegree.isEmpty()) {
+			int current = islandWithZeroIndegree.remove();
+			for (Integer i : adjList.get(current)) {
+				probabilty[i] += (probabilty[current] * ((double)1 / (double)outdegree[current]));
+				indegree[i]--;
+				if (indegree[i] == 0) {
+					islandWithZeroIndegree.add(i);
+				}
 			}
-		}
-		Collections.sort(result);
-		for(int i : result) {
-			System.out.print(i +" ");
-		}
-	}
 
-	private static void dfs(int startingIsland, Map<Integer, List<Integer>> adjacencyList) {
-		if (!adjacencyList.containsKey(startingIsland)) {
-			int count = 0;
-			if (stuckCount.containsKey(startingIsland)) {
-				count = stuckCount.get(startingIsland);
-				stuckCount.put(startingIsland, count + 1);
-				count++;
-			} else {
-				count = 1;
-				stuckCount.put(startingIsland, count);
-			}
-			if (count > MAX) {
-				MAX = count;
-			}
-			return;
 		}
-		for(int i : adjacencyList.get(startingIsland)) {
-			dfs(i,adjacencyList);
+		double max = 0;
+		for (int i = 0; i < numberOfIslands; i++) {
+			if (outdegree[i] == 0 && (probabilty[i] > max)) {
+				max = probabilty[i];
+			}
 		}
-
+		for(int i=0;i<numberOfIslands;i++) {
+			if(outdegree[i]==0  && Math.abs(probabilty[i]-max) < 1e-9) {
+				System.out.print(i+1+" ");
+			}
+		}
 	}
 }
