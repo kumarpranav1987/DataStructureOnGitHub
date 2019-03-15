@@ -13,7 +13,9 @@ import java.util.Stack;
 
 //https://www.hackerearth.com/practice/algorithms/graphs/strongly-connected-components/practice-problems/algorithm/a-walk-to-remember-qualifier2/
 public class AWalkToRemember {
+    
 	static boolean visited[];
+
 	public static void main(String[] args) {
 		Scanner s = new Scanner(System.in);
 		int n = s.nextInt();
@@ -30,27 +32,19 @@ public class AWalkToRemember {
 		visited = new boolean[n];
 		Arrays.fill(visited, false);
 		Stack<Integer> stack = new Stack<>();
-		Input input = new Input();
 		for (int i = 0; i < n; i++) {
 			if (!visited[i]) {
-				input.i = i+1;
-				input.adjList = adjList;
-				input.stack = stack;
-				dfs(input);
+				dfs(i + 1, adjList, stack);
 			}
 		}
 		Map<Integer, List<Integer>> reverseAdjList = transposeGraph(n, adjList);
 		Set<Set<Integer>> setOfConnentedComponents = new HashSet<>();
 		Arrays.fill(visited, false);
-		
 		while (!stack.isEmpty()) {
 			int ele = stack.pop();
 			if (!visited[ele - 1]) {
 				Set<Integer> component = new HashSet<>();
-				input.i = ele;
-				input.adjList = reverseAdjList;
-				input.stack = component;
-				dfs(input);
+				dfs(ele, reverseAdjList, component);
 				setOfConnentedComponents.add(component);
 			}
 		}
@@ -79,30 +73,12 @@ public class AWalkToRemember {
 		return reverseAdjList;
 	}
 
-	private static void dfs(Input input) {
-		if (visited[input.i - 1]) {
-			return;
-		}
-		visited[input.i-1] = true;
-		for (Integer j : input.adjList.get(input.i)) {
+	private static void dfs(int i, Map<Integer, List<Integer>> adjList, Collection<Integer> stack) {
+		visited[i-1] = true;
+		for (Integer j : adjList.get(i)) {
 			if (!visited[j - 1]) {
-				dfs(input);
+				dfs(j, adjList, stack);
 			}
 		}
-		input.stack.add(input.i);
-	}
-	static class Input{
-		int i; 
-		Map<Integer, List<Integer>> adjList;
-		Collection<Integer> stack;
-		public Input(){
-			
-		}
-		public Input(int i, Map<Integer, List<Integer>> adjList, Collection<Integer> stack) {
-			this.i = i;
-			this.adjList = adjList;
-			this.stack = stack;
-		}
-		
-	}
-}
+		stack.add(i);
+	}}
