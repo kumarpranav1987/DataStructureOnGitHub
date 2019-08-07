@@ -12,5 +12,6 @@ public class Main {
 		ll.selectionSort();
 		System.out.println("\nAfter Sorting");
 		ll.print();
+		System.out.println(ll.search(10));
 	}
 }
