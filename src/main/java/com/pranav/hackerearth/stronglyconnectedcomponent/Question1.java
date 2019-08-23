@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 
-//https://www.hackerearth.com/practice/algorithms/graphs/strongly-connected-components/tutorial/
+//https://www.hackerearth.com/practice/algorithms/graphs/strongly-connected-components/tutorial/  --------->>(Submitted In Java 8)
 //Strongly Connected Components Brute Force method 
 public class Question1 {
 	static boolean visited[];
