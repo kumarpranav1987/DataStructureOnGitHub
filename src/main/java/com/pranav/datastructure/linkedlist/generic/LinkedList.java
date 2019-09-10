@@ -1,6 +1,6 @@
 package com.pranav.datastructure.linkedlist.generic;
 
-public class LList<E extends Comparable<E>> {
+public class LinkedList<E extends Comparable<E>> {
 	private Node<E> head;
 
 	public void print() {
@@ -11,7 +11,7 @@ public class LList<E extends Comparable<E>> {
 		}
 	}
 
-	public void addAtStart(Node<E> newNode) {
+	public void addFirst(Node<E> newNode) {
 		if (head == null) {
 			head = newNode;
 		} else {
@@ -20,6 +20,14 @@ public class LList<E extends Comparable<E>> {
 		}
 	}
 
+	public void addLast(Node<E> newNode) {
+		if (head == null) {
+			head = newNode;
+		} else {
+			newNode.setNext(head);
+			head = newNode;
+		}
+	}
 	public void selectionSort() {
 		Node<E> temp = head;
 		while (temp != null) {

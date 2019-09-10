@@ -4,6 +4,9 @@ public class Node<E extends Comparable<E>> {
 	private E data;
 	private Node<E> next;
 	
+	public Node() {
+		
+	}
 	public Node(E data) {
 		this.data = data;
 	}

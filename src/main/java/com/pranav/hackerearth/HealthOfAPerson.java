@@ -18,12 +18,12 @@ public class HealthOfAPerson {
 			for (int j = 1; j < m + 1; j++) {
 				reductionInHealth[j] = s.nextInt();
 			}
-			for (int j = 1; j < n + 1; j++) {
+			for (int j = 1; j < m + 1; j++) {
 				boolean found = false;
-				for (int k = 1; k < m + 1; k++) {
-					if (j % k == 0) {
-						if (personHealthPoints[j] <= reductionInHealth[k]) {
-							System.out.println(k);
+				for (int k = j; k < n + 1; k=k+j) {
+					if (k % j == 0) {
+						if (personHealthPoints[k] <= reductionInHealth[j]) {
+							System.out.println(j);
 							found = true;
 							break;
 						}
